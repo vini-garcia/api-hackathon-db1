@@ -12,7 +12,7 @@ const verifyIdExists = async (
   const repo: ProductRepo = AppDataSource.getRepository(Product);
   const id: number = Number(request.params.id);
 
-  const productExists: boolean = await repo.exists({ where: { id } });
+  const productExists: Product | null = await repo.findOne({ where: { id } });
   if (!productExists) throw new AppError("Product not found", 404);
 
   response.locals = { ...response.locals, product: productExists };
